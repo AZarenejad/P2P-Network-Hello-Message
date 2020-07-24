@@ -1,0 +1,160 @@
+{
+    "current_neighbors": [
+        [
+            6,
+            "127.0.0.6",
+            4006
+        ],
+        [
+            2,
+            "127.0.0.2",
+            4002
+        ]
+    ],
+    "topology": {
+        "1": {
+            "unidirectional_neighbors": [
+                [
+                    4,
+                    "127.0.0.4",
+                    4004
+                ],
+                [
+                    5,
+                    "127.0.0.5",
+                    4005
+                ],
+                [
+                    3,
+                    "127.0.0.3",
+                    4003
+                ]
+            ],
+            "bidirectional_neighbors": [
+                [
+                    6,
+                    "127.0.0.6",
+                    4006
+                ],
+                [
+                    2,
+                    "127.0.0.2",
+                    4002
+                ]
+            ]
+        },
+        "2": {
+            "bidirectional_neighbors": [
+                [
+                    4,
+                    "127.0.0.4",
+                    4004
+                ]
+            ],
+            "unidirectional_neighbors": [
+                [
+                    1,
+                    "127.0.0.1",
+                    4001
+                ]
+            ]
+        },
+        "3": {
+            "bidirectional_neighbors": [
+                [
+                    5,
+                    "127.0.0.5",
+                    4005
+                ],
+                [
+                    4,
+                    "127.0.0.4",
+                    4004
+                ]
+            ],
+            "unidirectional_neighbors": []
+        },
+        "4": {
+            "bidirectional_neighbors": [
+                [
+                    3,
+                    "127.0.0.3",
+                    4003
+                ],
+                [
+                    2,
+                    "127.0.0.2",
+                    4002
+                ]
+            ],
+            "unidirectional_neighbors": []
+        },
+        "5": {
+            "bidirectional_neighbors": [
+                [
+                    6,
+                    "127.0.0.6",
+                    4006
+                ],
+                [
+                    3,
+                    "127.0.0.3",
+                    4003
+                ],
+                [
+                    4,
+                    "127.0.0.4",
+                    4004
+                ]
+            ],
+            "unidirectional_neighbors": []
+        },
+        "6": {
+            "bidirectional_neighbors": [
+                [
+                    1,
+                    "127.0.0.1",
+                    4001
+                ],
+                [
+                    4,
+                    "127.0.0.4",
+                    4004
+                ]
+            ],
+            "unidirectional_neighbors": []
+        }
+    },
+    "neighbors_report": {
+        "(2, '127.0.0.2', 4002)": {
+            "available time": 68.65680265426636,
+            "available time percent": 22.88560088475545,
+            "send to": 32,
+            "revieve from": 31
+        },
+        "(3, '127.0.0.3', 4003)": {
+            "available time": 67.9069755077362,
+            "available time percent": 22.635658502578735,
+            "send to": 27,
+            "revieve from": 34
+        },
+        "(4, '127.0.0.4', 4004)": {
+            "available time": 76.16972351074219,
+            "available time percent": 25.389907836914062,
+            "send to": 38,
+            "revieve from": 34
+        },
+        "(5, '127.0.0.5', 4005)": {
+            "available time": 33.94896078109741,
+            "available time percent": 11.316320260365805,
+            "send to": 17,
+            "revieve from": 21
+        },
+        "(6, '127.0.0.6', 4006)": {
+            "available time": 80.18637776374817,
+            "available time percent": 26.728792587916057,
+            "send to": 30,
+            "revieve from": 36
+        }
+    }
+}

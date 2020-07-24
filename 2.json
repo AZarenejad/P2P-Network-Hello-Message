@@ -1,0 +1,141 @@
+{
+    "current_neighbors": [
+        [
+            4,
+            "127.0.0.4",
+            4004
+        ]
+    ],
+    "topology": {
+        "1": {
+            "bidirectional_neighbors": [],
+            "unidirectional_neighbors": []
+        },
+        "2": {
+            "unidirectional_neighbors": [
+                [
+                    1,
+                    "127.0.0.1",
+                    4001
+                ]
+            ],
+            "bidirectional_neighbors": [
+                [
+                    4,
+                    "127.0.0.4",
+                    4004
+                ]
+            ]
+        },
+        "3": {
+            "bidirectional_neighbors": [
+                [
+                    2,
+                    "127.0.0.2",
+                    4002
+                ]
+            ],
+            "unidirectional_neighbors": [
+                [
+                    4,
+                    "127.0.0.4",
+                    4004
+                ]
+            ]
+        },
+        "4": {
+            "bidirectional_neighbors": [
+                [
+                    2,
+                    "127.0.0.2",
+                    4002
+                ],
+                [
+                    1,
+                    "127.0.0.1",
+                    4001
+                ]
+            ],
+            "unidirectional_neighbors": [
+                [
+                    5,
+                    "127.0.0.5",
+                    4005
+                ],
+                [
+                    6,
+                    "127.0.0.6",
+                    4006
+                ]
+            ]
+        },
+        "5": {
+            "bidirectional_neighbors": [
+                [
+                    2,
+                    "127.0.0.2",
+                    4002
+                ],
+                [
+                    6,
+                    "127.0.0.6",
+                    4006
+                ]
+            ],
+            "unidirectional_neighbors": [
+                [
+                    1,
+                    "127.0.0.1",
+                    4001
+                ]
+            ]
+        },
+        "6": {
+            "bidirectional_neighbors": [],
+            "unidirectional_neighbors": [
+                [
+                    2,
+                    "127.0.0.2",
+                    4002
+                ],
+                [
+                    5,
+                    "127.0.0.5",
+                    4005
+                ]
+            ]
+        }
+    },
+    "neighbors_report": {
+        "(1, '127.0.0.1', 4001)": {
+            "available time": 68.73269939422607,
+            "available time percent": 22.91089979807536,
+            "send to": 32,
+            "revieve from": 31
+        },
+        "(3, '127.0.0.3', 4003)": {
+            "available time": 74.66570258140564,
+            "available time percent": 24.888567527135212,
+            "send to": 31,
+            "revieve from": 36
+        },
+        "(4, '127.0.0.4', 4004)": {
+            "available time": 81.59028744697571,
+            "available time percent": 27.196762482325237,
+            "send to": 43,
+            "revieve from": 35
+        },
+        "(5, '127.0.0.5', 4005)": {
+            "available time": 57.86509680747986,
+            "available time percent": 19.288365602493286,
+            "send to": 26,
+            "revieve from": 18
+        },
+        "(6, '127.0.0.6', 4006)": {
+            "available time": 71.42454504966736,
+            "available time percent": 23.808181683222454,
+            "send to": 30,
+            "revieve from": 33
+        }
+    }
+}
