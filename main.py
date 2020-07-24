@@ -19,6 +19,62 @@ drop_rate = 0
 hosts_info = []
 terminate_program = False
 
+def read_config_file(file_path):
+	global number_of_hosts, number_of_maximum_neighbors, hosts_send_hello_message_per_second
+	global seconds_hosts_should_turned_off, period_off_second_for_host
+	global minutes_of_running_program, hosts_info , treshold_second_for_being_neighbor, drop_rate
+
+	with open(file_path) as file_pointer:
+		for cnt, line in enumerate(file_pointer):
+			if cnt == 0:
+				number_of_hosts = int(line)
+			elif cnt == 1:
+				number_of_maximum_neighbors = int(line)
+			elif cnt == 2:
+				hosts_send_hello_message_per_second = int(line)
+			elif cnt == 3:
+				treshold_second_for_being_neighbor = int(line)
+			elif cnt == 4:
+				seconds_hosts_should_turned_off = int(line)
+			elif cnt == 5:
+				period_off_second_for_host = int(line)
+			elif cnt == 6:
+				minutes_of_running_program = int(line)
+			elif cnt == 7:
+				drop_rate = float(line)
+			else:
+				host_ip, host_port, host_id = line.strip("\n").split(", ")
+				hosts_info.append((int(host_id), host_ip, int(host_port)))
+
+
+def start_network_run_hosts():
+	print("running network ...")
+	list_of_hosts = []
+	for i in range(number_of_hosts):
+		list_of_hosts.append(Host(hosts_info[i][0], hosts_info[i][1], hosts_info[i][2], hosts_info))
+		t = threading.Thread(target=list_of_hosts[i].run)
+		t.start()
+	t1 = threading.Thread(target=choose_random_host_to_be_disable, args=(list_of_hosts,)) 
+	t2 = threading.Thread(target=run_program_decide_when_to_finish)
+	t1.start()
+	t2.start()
+
+def choose_random_host_to_be_disable(list_of_hosts):
+	global terminate_program
+	while True:
+		num = np.random.randint(number_of_hosts)
+		if terminate_program:
+			break
+		list_of_hosts[num].disable()
+		time.sleep(seconds_hosts_should_turned_off)
+
+def run_program_decide_when_to_finish():
+	global terminate_program
+	for i in range(minutes_of_running_program):
+		time.sleep(60)
+		print("+1 minutes passed")
+	print("finish simulating.")
+	terminate_program = True
 
 
 class Host():
@@ -128,7 +184,7 @@ class Host():
 							self.bidirectional_neighbors.append(sender_info)
 							if self.connection_time[sender_info[0]] == None:
 								self.connection_time[sender_info[0]] = now
-							t = threading.Thread(target = self.not_heard_for_long_time, args=(sender_info,))
+							t = threading.Thread(target = self.check_to_remove_host_if_not_hear_for_long_time, args=(sender_info,))
 							self.last_message_from_node_to_here[message.sender_id] = now
 							t.start()
 							
@@ -139,16 +195,14 @@ class Host():
 							self.connection_time[message.sender_id] += now - self.last_message_from_node_to_here[message.sender_id]
 						self.unidirectional_neighbors.append(sender_info)
 						self.last_message_from_node_to_here[message.sender_id] = now
-						t = threading.Thread(target = self.not_heard_for_long_time, args=(sender_info,))
+						t = threading.Thread(target = self.check_to_remove_host_if_not_hear_for_long_time, args=(sender_info,))
 						t.start()
 			else:
 				self.unidirectional_neighbors.clear()
 				self.bidirectional_neighbors.clear()
 		return
 
-	
-
-	def not_heard_for_long_time(self, host):
+	def check_to_remove_host_if_not_hear_for_long_time(self, host):
 		while True:
 			if terminate_program:
 				break
@@ -228,63 +282,7 @@ class Message:
 		self.last_message_from_reciever_to_sender = last_message_from_reciever_to_sender
 		self.last_message_from_sender_to_reciever = last_message_from_sender_to_reciever
 
-def read_config_file(file_path):
-	global number_of_hosts, number_of_maximum_neighbors, hosts_send_hello_message_per_second
-	global seconds_hosts_should_turned_off, period_off_second_for_host
-	global minutes_of_running_program, hosts_info , treshold_second_for_being_neighbor, drop_rate
-
-	with open(file_path) as file_pointer:
-		for cnt, line in enumerate(file_pointer):
-			if cnt == 0:
-				number_of_hosts = int(line)
-			elif cnt == 1:
-				number_of_maximum_neighbors = int(line)
-			elif cnt == 2:
-				hosts_send_hello_message_per_second = int(line)
-			elif cnt == 3:
-				treshold_second_for_being_neighbor = int(line)
-			elif cnt == 4:
-				seconds_hosts_should_turned_off = int(line)
-			elif cnt == 5:
-				period_off_second_for_host = int(line)
-			elif cnt == 6:
-				minutes_of_running_program = int(line)
-			elif cnt == 7:
-				drop_rate = float(line)
-			else:
-				host_ip, host_port, host_id = line.strip("\n").split(", ")
-				hosts_info.append((int(host_id), host_ip, int(host_port)))
-
-def start_network():
-	print("running network ...")
-	list_of_hosts = []
-	for i in range(number_of_hosts):
-		list_of_hosts.append(Host(hosts_info[i][0], hosts_info[i][1], hosts_info[i][2], hosts_info))
-		t = threading.Thread(target=list_of_hosts[i].run)
-		t.start()
-	t1 = threading.Thread(target=disable_random_host, args=(list_of_hosts,)) 
-	t2 = threading.Thread(target=program_terminator)
-	t1.start()
-	t2.start()
-
-def disable_random_host(list_of_hosts):
-	global terminate_program
-	while True:
-		num = np.random.randint(number_of_hosts)
-		if terminate_program:
-			break
-		list_of_hosts[num].disable()
-		time.sleep(seconds_hosts_should_turned_off)
-
-def program_terminator():
-	global terminate_program
-	for i in range(minutes_of_running_program):
-		time.sleep(60)
-		print("+1 minutes passed")
-	print("finish simulating.")
-	terminate_program = True
-
 
 if __name__ == "__main__":
 	read_config_file("config.txt")
-	start_network()
+	start_network_run_hosts()
