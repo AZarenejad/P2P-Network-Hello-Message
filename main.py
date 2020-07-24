@@ -1,10 +1,10 @@
+import datetime
+import pickle
+import random
 import socket
 import threading
 import time
 import numpy as np
-import datetime
-import pickle
-import random
 from random import randrange
 import json
 
@@ -107,14 +107,14 @@ class Host():
 	def disable(self):
 		self.is_off = True
 		t = threading.Thread(target=self.wait_to_enable)
-		# print("host with %s:%d with id %d turned off at %s"
-		# %(self.host_ip, self.host_port, self.host_id, datetime.datetime.now().time()))
+		print("host with %s:%d with id %d turned off at %s"
+		%(self.host_ip, self.host_port, self.host_id, datetime.datetime.now().time()))
 		t.start()
 	
 	def wait_to_enable(self):
 		time.sleep(period_off_second_for_host)
-		# print("host with %s:%d with id %d turned on at %s"
-		# %(self.host_ip, self.host_port, self.host_id, datetime.datetime.now().time()))
+		print("host with %s:%d with id %d turned on at %s"
+		%(self.host_ip, self.host_port, self.host_id, datetime.datetime.now().time()))
 		self.is_off = False
 	
 
@@ -145,15 +145,15 @@ class Host():
 			if terminate_program:
 				break
 			if not self.is_off:
-				# print("host %s:%d with id %d ready to send message at %s"%(self.host_ip, self.host_port,
-				#  self.host_id, datetime.datetime.now().time()))
+				print("host %s:%d with id %d ready to send message at %s"%(self.host_ip, self.host_port,
+				 self.host_id, datetime.datetime.now().time()))
 				if len(self.bidirectional_neighbors) < number_of_maximum_neighbors:
 					self.find_new_neighbor()
 				self.send_to_all_neighbors()
 				
 
 			else:
-				# print("jost %s:%d with id %d is off now to send."%(self.host_ip, self.host_port, self.host_id))
+				print("jost %s:%d with id %d is off now to send."%(self.host_ip, self.host_port, self.host_id))
 				self.unidirectional_neighbors.clear()
 				self.bidirectional_neighbors.clear()
 		
@@ -236,10 +236,10 @@ class Host():
 			self.socket.sendto(data, addr)
 		else:
 			pass
-			# print("drop message from host %s:%d to host %s:%s"%(self.host_ip, self.host_port, addr[0], addr[1]))
+			print("drop message from host %s:%d to host %s:%s"%(self.host_ip, self.host_port, addr[0], addr[1]))
 	
 	def run(self):
-		# print("host %s:%d with id %s start"%(self.host_id, self.host_port, self.host_id))
+		print("host %s:%d with id %s start"%(self.host_id, self.host_port, self.host_id))
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		self.socket.bind((self.host_ip, self.host_port))
 		t1 = threading.Thread(target=self.recieve)
