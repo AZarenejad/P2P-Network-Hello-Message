@@ -20,20 +20,6 @@ hosts_info = []
 terminate_program = False
 
 
-class Message:
-	def __init__(self, sender_id, sender_ip, sender_port, message_type = "hello"
-	, bidirectional_neighbors = []
-	, unidirectional_neighbors = []
-	, last_message_from_reciever_to_sender = 0
-	, last_message_from_sender_to_reciever = 0):
-		self.sender_id = sender_id
-		self.sender_ip = sender_ip
-		self.sender_port = sender_port
-		self.bidirectional_neighbors = bidirectional_neighbors
-		self.unidirectional_neighbors = unidirectional_neighbors
-		self.last_message_from_reciever_to_sender = last_message_from_reciever_to_sender
-		self.last_message_from_sender_to_reciever = last_message_from_sender_to_reciever
-
 
 class Host():
 	def __init__(self, host_id, host_ip, host_port, all_hosts):
@@ -227,6 +213,20 @@ class Host():
 		report["neighbors_report"] = neighbors_report
 		with open(str(self.host_id) + ".json", "w") as outfile:
 			json.dump(report, outfile, indent = 4)
+
+class Message:
+	def __init__(self, sender_id, sender_ip, sender_port, message_type = "hello"
+	, bidirectional_neighbors = []
+	, unidirectional_neighbors = []
+	, last_message_from_reciever_to_sender = 0
+	, last_message_from_sender_to_reciever = 0):
+		self.sender_id = sender_id
+		self.sender_ip = sender_ip
+		self.sender_port = sender_port
+		self.bidirectional_neighbors = bidirectional_neighbors
+		self.unidirectional_neighbors = unidirectional_neighbors
+		self.last_message_from_reciever_to_sender = last_message_from_reciever_to_sender
+		self.last_message_from_sender_to_reciever = last_message_from_sender_to_reciever
 
 def read_config_file(file_path):
 	global number_of_hosts, number_of_maximum_neighbors, hosts_send_hello_message_per_second
