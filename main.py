@@ -163,14 +163,19 @@ class Host():
 	
 
 	def not_heard_for_long_time(self, host):
-		time.sleep(treshold_second_for_being_neighbor)
-		now = time.time()
-		if now - self.last_message_from_node_to_here[host[0]] > treshold_second_for_being_neighbor:
-			if host in self.bidirectional_neighbors:
-				self.bidirectional_neighbors.remove(host)
-				self.connection_time[host[0]] += now - self.last_message_from_node_to_here[host[0]]
-			elif host in self.unidirectional_neighbors:
-				self.unidirectional_neighbors.remove(host)
+		while True:
+			if terminate_program:
+				break
+			time.sleep(treshold_second_for_being_neighbor)
+			now = time.time()
+			if now - self.last_message_from_node_to_here[host[0]] > treshold_second_for_being_neighbor:
+				if host in self.bidirectional_neighbors:
+					self.bidirectional_neighbors.remove(host)
+					self.connection_time[host[0]] += now - self.last_message_from_node_to_here[host[0]]
+					break
+				elif host in self.unidirectional_neighbors:
+					self.unidirectional_neighbors.remove(host)
+					break
 		return
 
 	def send_hello_message_to_node(self, host):
